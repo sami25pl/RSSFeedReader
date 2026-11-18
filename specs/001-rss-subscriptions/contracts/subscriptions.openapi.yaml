@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: RSS Feed Reader MVP API
+  version: 1.0.0
+paths:
+  /api/subscriptions:
+    get:
+      summary: List subscriptions
+      responses:
+        "200":
+          description: Current in-memory subscriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Subscription"
+    post:
+      summary: Add a subscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddSubscriptionRequest"
+      responses:
+        "201":
+          description: Subscription added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "400":
+          description: URL is empty or whitespace
+components:
+  schemas:
+    AddSubscriptionRequest:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          minLength: 1
+    Subscription:
+      type: object
+      required:
+        - id
+        - url
+      properties:
+        id:
+          oneOf:
+            - type: integer
+              format: int64
+            - type: string
+        url:
+          type: string
