@@ -1,0 +1,72 @@
+@page "/"
+@using RSSFeedReader.UI.Services
+@inject SubscriptionService SubscriptionService
+
+<PageTitle>Subscriptions</PageTitle>
+
+<h1>Subscriptions</h1>
+
+<EditForm Model="this" OnSubmit="AddSubscription">
+    <label for="subscription-url">Feed URL</label>
+    <InputText id="subscription-url" @bind-Value="Url" />
+    <button type="submit">Add subscription</button>
+</EditForm>
+
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <p role="status">@Message</p>
+}
+
+@if (SubscriptionItems is null)
+{
+    <p>Loading subscriptions...</p>
+}
+else if (SubscriptionItems.Count == 0)
+{
+    <p>No subscriptions yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var subscription in SubscriptionItems)
+        {
+            <li>@subscription.Url</li>
+        }
+    </ul>
+}
+
+@code {
+    private IReadOnlyList<Subscription>? SubscriptionItems;
+    private string Url = string.Empty;
+    private string Message = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSubscriptions();
+    }
+
+    private async Task LoadSubscriptions()
+    {
+        SubscriptionItems = await SubscriptionService.GetAllAsync();
+    }
+
+    private async Task AddSubscription()
+    {
+        if (string.IsNullOrWhiteSpace(Url))
+        {
+            Message = "Enter a feed URL.";
+            return;
+        }
+
+        if (await SubscriptionService.AddAsync(Url.Trim()))
+        {
+            Url = string.Empty;
+            Message = "Subscription added.";
+            await LoadSubscriptions();
+        }
+        else
+        {
+            Message = "Could not add the subscription.";
+        }
+    }
+}

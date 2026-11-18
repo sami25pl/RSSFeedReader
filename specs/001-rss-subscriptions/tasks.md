@@ -21,14 +21,14 @@ testing of each story.
 
 **Purpose**: Create the backend and frontend projects needed for the MVP.
 
-- [ ] T001 Create the ASP.NET Core Web API project in `backend/RSSFeedReader.Api/`.
-- [ ] T002 [P] Create the Blazor WebAssembly project in `frontend/RSSFeedReader.UI/`.
-- [ ] T003 [P] Create test project directories in `tests/backend/` and `tests/frontend/`.
-- [ ] T004 Configure the backend launch port in
+- [X] T001 Create the ASP.NET Core Web API project in `backend/RSSFeedReader.Api/`.
+- [X] T002 [P] Create the Blazor WebAssembly project in `frontend/RSSFeedReader.UI/`.
+- [X] T003 [P] Create test project directories in `tests/backend/` and `tests/frontend/`.
+- [X] T004 Configure the backend launch port in
   `backend/RSSFeedReader.Api/Properties/launchSettings.json`.
-- [ ] T005 Configure the frontend launch port in
+- [X] T005 Configure the frontend launch port in
   `frontend/RSSFeedReader.UI/Properties/launchSettings.json`.
-- [ ] T006 Configure the frontend API base URL in
+- [X] T006 Configure the frontend API base URL in
   `frontend/RSSFeedReader.UI/wwwroot/appsettings.json`.
 
 ---
@@ -39,16 +39,16 @@ testing of each story.
 
 **CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T007 Remove template demo pages `Home.razor`, `Counter.razor`, and `Weather.razor` from
+- [X] T007 Remove template demo pages `Home.razor`, `Counter.razor`, and `Weather.razor` from
   `frontend/RSSFeedReader.UI/Pages/`.
-- [ ] T008 [P] Update demo navigation in
+- [X] T008 [P] Update demo navigation in
   `frontend/RSSFeedReader.UI/Layout/NavMenu.razor` to expose only MVP navigation.
-- [ ] T009 [P] Configure local frontend CORS in `backend/RSSFeedReader.Api/Program.cs`.
-- [ ] T010 [P] Configure a configured API `HttpClient` base address in
+- [X] T009 [P] Configure local frontend CORS in `backend/RSSFeedReader.Api/Program.cs`.
+- [X] T010 [P] Configure a configured API `HttpClient` base address in
   `frontend/RSSFeedReader.UI/Program.cs`.
-- [ ] T011 [P] Configure the backend subscription API routing and JSON behavior in
+- [X] T011 [P] Configure the backend subscription API routing and JSON behavior in
   `backend/RSSFeedReader.Api/Program.cs`.
-- [ ] T012 Verify that exactly one page uses `@page "/"` in
+- [X] T012 Verify that exactly one page uses `@page "/"` in
   `frontend/RSSFeedReader.UI/Pages/`.
 
 **Checkpoint**: Backend and frontend projects start and share matching local configuration.
@@ -64,24 +64,24 @@ the list without feed fetching or parsing.
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Create the `Subscription` DTO in
+- [X] T013 [P] [US1] Create the `Subscription` DTO in
   `backend/RSSFeedReader.Api/Models/Subscription.cs`, satisfying `data-model.md`
   `Subscription.id` and `Subscription.url`.
-- [ ] T014 [P] [US1] Create the add-subscription request model in
+- [X] T014 [P] [US1] Create the add-subscription request model in
   `backend/RSSFeedReader.Api/Models/AddSubscriptionRequest.cs`, enforcing
   `data-model.md Subscription.url` as a non-empty, whitespace-trimmed value.
-- [ ] T015 [US1] Implement the in-memory subscription service in
+- [X] T015 [US1] Implement the in-memory subscription service in
   `backend/RSSFeedReader.Api/Services/SubscriptionService.cs`, using
   `data-model.md Subscription.id` for process-unique identifiers and preserving creation order.
-- [ ] T016 [US1] Implement `POST /api/subscriptions` in
+- [X] T016 [US1] Implement `POST /api/subscriptions` in
   `backend/RSSFeedReader.Api/Program.cs`, using `SubscriptionService` and returning `201` for a
   valid entry or `400` for an empty entry as defined by
   `contracts/subscriptions.openapi.yaml`.
-- [ ] T017 [P] [US1] Create the frontend subscription API service in
+- [X] T017 [P] [US1] Create the frontend subscription API service in
   `frontend/RSSFeedReader.UI/Services/SubscriptionService.cs`.
-- [ ] T018 [US1] Create the subscription entry page in
+- [X] T018 [US1] Create the subscription entry page in
   `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor`.
-- [ ] T019 [US1] Add non-empty submission feedback and clear the input after a successful add in
+- [X] T019 [US1] Add non-empty submission feedback and clear the input after a successful add in
   `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor`.
 
 **Checkpoint**: User Story 1 is independently usable: a submitted URL is added and listed.
@@ -98,14 +98,14 @@ the backend, and verify that the session-only list is empty.
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Implement `GET /api/subscriptions` in
+- [X] T020 [P] [US2] Implement `GET /api/subscriptions` in
   `backend/RSSFeedReader.Api/Program.cs` according to
   `contracts/subscriptions.openapi.yaml`.
-- [ ] T021 [P] [US2] Add the frontend list-loading operation to
+- [X] T021 [P] [US2] Add the frontend list-loading operation to
   `frontend/RSSFeedReader.UI/Services/SubscriptionService.cs`.
-- [ ] T022 [US2] Render all session subscriptions and an empty-state message in
+- [X] T022 [US2] Render all session subscriptions and an empty-state message in
   `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor`.
-- [ ] T023 [US2] Refresh the frontend list after a successful addition in
+- [X] T023 [US2] Refresh the frontend list after a successful addition in
   `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor`.
 
 **Checkpoint**: User Stories 1 and 2 provide a complete MVP add-and-view loop.
@@ -116,9 +116,9 @@ the backend, and verify that the session-only list is empty.
 
 **Purpose**: Verify configuration, quality, scope boundaries, and end-to-end behavior.
 
-- [ ] T024 [P] Add focused backend tests for in-memory add/list behavior in
+- [X] T024 [P] Add focused backend tests for in-memory add/list behavior in
   `tests/backend/`.
-- [ ] T025 [P] Add frontend tests for empty-state and successful-add rendering in
+- [X] T025 [P] Add frontend tests for empty-state and successful-add rendering in
   `tests/frontend/`.
 - [ ] T026 Verify all deferred features remain absent: no feed fetching, parsing, persistence,
   removal, duplicate prevention, or background refresh.
