@@ -1,50 +1,67 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# RSS Feed Reader Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Security by Design
+Every change MUST protect user data and respect trust boundaries. Do not commit credentials,
+expose secrets in logs, or render feed-provided HTML as trusted content. While the MVP does not
+fetch feeds, any feature that introduces server-side fetching MUST restrict schemes to HTTP and
+HTTPS, validate destinations and redirects against loopback, private, and link-local networks,
+and enforce timeouts and response-size limits. Local API CORS policies MUST allow only the
+intended frontend origins.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Maintainable Simplicity
+Code MUST use focused responsibilities and the existing ASP.NET Core Web API and Blazor
+WebAssembly architecture. Keep the backend responsible for API and application data and the
+frontend responsible for user interaction. Add abstractions, dependencies, and configuration
+only when a current requirement needs them; avoid speculative features and duplicated logic.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Verified Quality
+Changes MUST be validated at the level of behavior they affect. Add or update focused tests for
+new or corrected behavior, including API/UI integration tests when contracts or communication
+between those layers change. Before declaring a change complete, run the relevant tests and
+builds, and report any validation that could not be run. Failures MUST be visible and handled
+explicitly rather than silently ignored.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. MVP Scope and Incremental Delivery
+The MVP is limited to adding feed subscriptions by URL and displaying the subscription list.
+Subscriptions may remain in memory; feed fetching, parsing, persistence, removal, and other
+enhancements are out of MVP scope unless explicitly approved for a later phase. Each change MUST
+meet an identified current-phase requirement and preserve a clear path for incremental extension.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Clear User Feedback
+User actions MUST produce a clear, timely UI result, including when an operation fails. The
+subscription list MUST visibly reflect a successful addition. When network operations are added
+in a later phase, errors MUST be communicated without exposing sensitive implementation details;
+the UI MUST distinguish failure from success and remain usable.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Project Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+The application is a locally run, single-user proof of concept targeting Windows, macOS, and
+Linux. The backend uses ASP.NET Core Web API and the frontend uses Blazor WebAssembly. Keep
+development configuration aligned across backend listen addresses, frontend API base URLs, and
+CORS origins. Features deferred by the project goals require explicit phase approval before
+implementation.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Before implementation, identify the applicable MVP or later-phase requirement and its observable
+acceptance behavior. Keep changes focused on that behavior. For UI work, verify the application
+has no conflicting routes; for API/UI changes, verify configured addresses and CORS permit the
+intended local connection. Review changes for the principles above, run the relevant tests and
+builds, and summarize the results and any known limitations.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution governs project decisions and supersedes conflicting development conventions.
+Amendments MUST be reviewed and recorded in this file. Each amendment MUST update the version,
+last-amended date, and Sync Impact Report; reviewers MUST check that affected requirements and
+implementation guidance remain consistent. Project changes and reviews MUST assess compliance
+with the relevant principles. Exceptions MUST be documented with their scope and rationale.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Versioning follows semantic versioning: MAJOR for backward-incompatible removals or
+redefinitions of principles, MINOR for new principles or materially expanded governance, and
+PATCH for clarifications and non-semantic refinements.
+
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): confirm original adoption date |
+**Last Amended**: 2026-11-17
